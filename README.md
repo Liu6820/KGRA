@@ -25,6 +25,28 @@ We provide the dataset in the [data](data/) folder.
 - [OpenBioLink](data/OpenBioLink/)
 - [Biokg](data/Biokg/)
 
+## Repository structure
+
+The current repository is structured in the following way:
+```
+|-- KGRA.jpg
+|-- README.md
+|-- main.py
+|-- test.py
+|-- config
+|   |-- log_config.json
+|-- data (Data folder)
+|   |-- GP-KG
+|   |-- OpenBiolink
+|   `-- Biokg
+`-- model
+    |-- KGRA.py
+    |-- data_loader.py
+    |-- message_passing.py
+    |-- predict.py
+    |-- tool.py
+```
+
 Model Training:
 1)Create a folder "test_data" under folder "data" and move training data, valid data, and test data to the folder. 
 2)Use the following command to train the model, the model will be named as "test_model" and saved in the directory "model_saved".
