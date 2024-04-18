@@ -40,23 +40,27 @@ The current repository is structured in the following way:
 |   |-- OpenBiolink
 |   `-- Biokg
 `-- model
-    |-- KGRA.py
+    |-- KGRMA.py
     |-- data_loader.py
     |-- message_passing.py
     |-- predict.py
     |-- tool.py
 ```
 
-Model Training:
-1)Create a folder "test_data" under folder "data" and move training data, valid data, and test data to the folder. 
-2)Use the following command to train the model, the model will be named as "test_model" and saved in the directory "model_saved".
+## Model
+
+The basic structure of our model an be found in [model](model/) folder.
+The model can be divided into 4 parts, data loading, KGRMA module, KWL module and InteractE decoder. They can be used in file [`data_loader.py`](model/data_loader.py), [`KGRMA.py`](model/KGRMA.py) and [`predict.py`](model/predict.py).
+
+Training:
+Training-related utilities can be found in [`main.py`](main.py). They accept `Iterator`'s that yield batched data,
+identical to the output of a `torch.utils.data.DataLoader`. Use the following command to train the model, the model will be named as "test_model" and saved in the directory "model_saved".
   python main.py -data test_data -gpu 1 -name test_model -epoch 500
 
 
 Drug-Disease Predicting:
-1)Create a test file named as "ad_pre.txt" and moved the file to the folder "test_data".
-2)Run the following command, predicting results will be saved in the file "pre_results.txt".
-  python test.py -data test_data -gpu 1 -name test_model -save_result pre_results.txt -test_file ad_pre.txt
+Test-related utilities can be found in [`test.py`](test.py). Create a test file named as "drug_pre.txt" and moved the file to the folder "test_data". Run the following command, predicting results will be saved in the file "results.txt".
+  python test.py -data test_data -gpu 1 -name test_model -save_result drug_pre.txt -test_data result.txt
 
 
 Parameter Note:
