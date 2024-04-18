@@ -56,13 +56,14 @@ The model can be divided into 4 parts, data loading, KGRMA module, KWL module an
 Training:
 Training-related utilities can be found in [`main.py`](main.py). They accept `Iterator`'s that yield batched data,
 identical to the output of a `torch.utils.data.DataLoader`. Use the following command to train the model, the model will be named as "test_model" and saved in the directory "model_saved".
-  python main.py -data test_data -gpu 1 -name test_model -epoch 500
-
+```
+    python main.py -data test_data -gpu 1 -name test_model -epoch 500
+```
 
 Drug-Disease Predicting:
 Test-related utilities can be found in [`test.py`](test.py). Create a test file named as "drug_pre.txt" and moved the file to the folder "test_data". Run the following command, predicting results will be saved in the file "results.txt".
 ```
-             python test.py -data test_data -gpu 1 -name test_model -save_result drug_pre.txt -test_data result.txt
+    python test.py -data test_data -gpu 1 -name test_model -save_result drug_pre.txt -test_data result.txt
 ```
 
 Parameter Note:
