@@ -4,7 +4,7 @@ from torch_geometric.nn import MessagePassing
 from torch_geometric.utils import softmax
 from model.tools import ccorr_new, cconv, ccorr, rotate
 import torch.nn.functional as F
-class KGRA(MessagePassing):
+class KGRMA(MessagePassing):
     def __init__(self, in_channels, out_channels, rel_dim, drop, bias, op, beta):
         super(self.__class__, self).__init__()
         self.in_channels = in_channels
