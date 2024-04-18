@@ -57,7 +57,7 @@ Training:
 Training-related utilities can be found in [`main.py`](main.py). They accept `Iterator`'s that yield batched data,
 identical to the output of a `torch.utils.data.DataLoader`. Use the following command to train the model, the model will be named as "test_model" and saved in the directory "model_saved".
 ```
-    python main.py -data test_data -gpu 1 -name test_model -epoch 500
+    python main.py -data dataset_directory -gpu 1 -name test_model -epoch 500
 ```
 
 Drug-Disease Predicting:
