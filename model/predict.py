@@ -27,10 +27,10 @@ class BaseModel(torch.nn.Module):
       return loss_
      
     def tloss_function(self, y, t, drop_rate):
-        loss = self.bceloss(y, t)  # 这个loss全是负数！
+        loss = self.bceloss(y, t) 
 
-        loss_mul = loss * t  # 只包含正样本的损失，负样本损失为0，正样本损失均为负数
-        ind_sorted = np.argsort(loss_mul.cpu().data).cuda()  # 将正样本的损失进行排序，默认从小到大，返回索引
+        loss_mul = loss * t  
+        ind_sorted = np.argsort(loss_mul.cpu().data).cuda()  
         loss_sorted = loss[ind_sorted]
 
         remember_rate = 1 - drop_rate
@@ -60,26 +60,8 @@ class GPKG_EMBEDD(BaseModel):
         #     self.init_rel = get_param((num_rel * 2, self.p.init_dim))
         self.init_rel = get_param((num_rel * 2, self.p.init_dim))
         if self.p.num_bases > 0:
-            self.conv1 = CompGATv3(in_channels=self.p.init_dim, out_channels=self.p.gcn_dim, rel_dim=self.p.rel_dim, 
-                                   drop=self.p.encoder_drop, bias=True, op=self.p.op, beta=self.p.beta)
-            # self.conv1 = GPKGConvBasis(self.p.init_dim, self.p.gcn_dim, num_rel, self.p.num_bases, act=self.act,
-            #                            params=self.p)
-            # self.conv2 = GPKGConv(self.p.gcn_dim, self.p.embed_dim, num_rel, act=self.act,
-            #                       params=self.p) if self.p.gcn_layer == 2 else None
-        elif self.p.num_bases == -2:
-            self.conv1 = GPKGConv(self.p.init_dim, self.p.gcn_dim, num_rel, act=self.act, params=self.p)
-            self.conv2 = CompGATv3(in_channels=self.p.gcn_dim, out_channels=self.p.embed_dim, rel_dim=self.p.rel_dim, 
-                                   drop=self.p.encoder_drop, bias=True, op=self.p.op, beta=self.p.beta)if self.p.gcn_layer == 2 else None
-            
-        elif self.p.num_bases == -6:
-            self.conv1 = GPKGConv(self.p.init_dim, self.p.gcn_dim, num_rel, act=self.act, params=self.p)
-            self.conv2 = Transformer(in_channels=self.p.gcn_dim, out_channels=self.p.embed_dim, rel_dim=self.p.rel_dim, 
-                                   drop=self.p.encoder_drop, bias=True, op=self.p.op, beta=self.p.beta)if self.p.gcn_layer == 2 else None
-            
-        else:
-            self.conv1 = GPKGConv(self.p.init_dim, self.p.gcn_dim, num_rel, act=self.act, params=self.p)
-            self.conv2 = GPKGConv(self.p.gcn_dim, self.p.embed_dim, num_rel, act=self.act,
-                                  params=self.p) if self.p.gcn_layer == 2 else None
+            self.conv1 = KGRMA(in_channels=self.p.init_dim, out_channels=self.p.gcn_dim, rel_dim=self.p.rel_dim, 
+        else None
 
         self.register_parameter('bias', Parameter(torch.zeros(self.p.num_ent)))
 
